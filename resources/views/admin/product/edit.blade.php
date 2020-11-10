@@ -16,8 +16,11 @@
         <div class="card pd-20 pd-sm-40">
             <h6 class="card-body-title">Update Product</h6>
             
-    <form action="{{ route('store-products') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('update-products') }}" method="POST" enctype="multipart/form-data">
             @csrf
+
+            <input type="hidden" name="id" value="{{ $product->id }}">
+            
             <div class="form-layout">
 
                 @if(session('success'))
@@ -76,7 +79,7 @@
                       <option label="Choose category"></option>
 
                       @foreach ($categories as $category)
-                      <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                      <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? "selected": "" }}>{{ $category->category_name }}</option>
                       @endforeach
                       
                     </select>
@@ -92,7 +95,7 @@
                       <select class="form-control select2" name="brand_id" data-placeholder="Choose country">
                         <option label="Choose brand"></option>
                         @foreach ($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->brand_name }}</option>
+                            <option value="{{ $brand->id }}" {{ $brand->id == $product->brand_id ? "selected": "" }}>{{ $brand->brand_name }}</option>
                         @endforeach
                       </select>
                       @error('brand_id')
@@ -104,7 +107,7 @@
                   <div class="col-lg-12">
                     <div class="form-group">
                       <label class="form-control-label">Short Description: <span class="tx-danger">*</span></label>
-                      <textarea name="short_description" id="summernote" rows="5"></textarea>
+                      <textarea name="short_description" id="summernote" rows="5">{{ $product->short_description }}</textarea>
 
                       @error('short_description')
                         <strong class="text-danger">{{ $message }}</strong>
@@ -113,11 +116,12 @@
                     </div>
                 </div><!-- col-4 -->
 
+              
 
                 <div class="col-lg-12">
                     <div class="form-group">
                       <label class="form-control-label">Long Description: <span class="tx-danger">*</span></label>
-                      <textarea name="long_description" id="summernote2" rows="5"></textarea>
+                      <textarea name="long_description" id="summernote2" rows="5">{{ $product->long_description }}</textarea>
 
                     @error('long_description')
                       <strong class="text-danger">{{ $message }}</strong>
@@ -125,18 +129,70 @@
 
                     </div>
                 </div><!-- col-4 -->
-                  
+              </div>
+              </div><!-- row -->
+                <button class="btn btn-info mg-r-5">Update Data</button>
+
+              </form>
+
+
+
+
+
+          
+    <form action="{{ route('update-image') }}" method="POST" enctype="multipart/form-data"> 
+                @csrf
+                   
+                <input type="hidden" name="id" value="{{ $product->id }}">
+                <input type="hidden" name="img_one" value="{{ $product->image_one }}">
+                <input type="hidden" name="img_two" value="{{ $product->image_two }}">
+                <input type="hidden" name="img_three" value="{{ $product->image_three }}">
+
+
+                {{-- first image call db --}}
+            <div class="row row-sm mt-5">
                 <div class="col-lg-4">
-                    <div class="form-group">
-                      <label class="form-control-label">Frist Image: <span class="tx-danger">*</span></label>
-                      <input class="form-control" type="file" name="image_one">
+                  <div class="form-group">
+                    <label class="form-control-label">Frist Image: <span class="tx-danger">*</span></label>
+                    <img src="{{ asset($product->image_one) }}" alt="" height="120px" width="120px">
 
-                    @error('image_one')
-                      <strong class="text-danger">{{ $message }}</strong>
-                    @enderror
+                  </div>
+              </div><!-- col-4 -->   
 
-                    </div>
-                </div><!-- col-4 -->
+              
+                     {{-- second image  call db--}}
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Second Image: <span class="tx-danger">*</span></label>
+                <img src="{{ asset($product->image_two) }}" alt="" height="120px" width="120px">
+                        
+          </div>
+      </div><!-- col-4 -->   
+
+              {{-- three image  call db--}}
+
+         <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">Third Image: <span class="tx-danger">*</span></label>
+            <img src="{{ asset($product->image_three) }}" alt="" height="120px" width="120px">
+
+          </div>
+      </div><!-- col-4 -->  
+              
+                          
+
+      <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">Frist Image: <span class="tx-danger">*</span></label>
+              <input class="form-control" type="file" name="image_one">
+
+              @error('image_one')
+                <strong class="text-danger">{{ $message }}</strong>
+              @enderror
+
+          </div>
+        </div><!-- col-4 -->  
 
                 <div class="col-lg-4">
                     <div class="form-group">
@@ -146,34 +202,44 @@
                       <strong class="text-danger">{{ $message }}</strong>
                     @enderror
                     </div>
-                </div><!-- col-4 -->
+                </div><!-- col-4 --> 
 
-                <div class="col-lg-4">
-                    <div class="form-group">
-                      <label class="form-control-label">Third Image: <span class="tx-danger">*</span></label>
-                      <input class="form-control" type="file" name="image_three">
-                    @error('image_three')
-                      <strong class="text-danger">{{ $message }}</strong>
-                    @enderror
-                    </div>
-                </div><!-- col-4 -->
 
-              </div><!-- row -->
+               
+
+         <div class="col-lg-4">
+          <div class="form-group">
+            <label class="form-control-label">Third Image: <span class="tx-danger">*</span></label>
+              <input class="form-control" type="file" name="image_three">
+              @error('image_three')
+                <strong class="text-danger">{{ $message }}</strong>
+              @enderror
+           </div>
+        </div><!-- col-4 -->  
+
+
+
+
+              
   
-              <div class="form-layout-footer">
-                <button class="btn btn-info mg-r-5">Update Products</button>
+      <div class="form-layout-footer">
+        <button class="btn btn-info mg-r-5">Update Image</button>
                 
-              </div><!-- form-layout-footer -->
+      </div><!-- form-layout-footer -->
+                    
+   </div> 
 
+</form>
 
-            </form>
+            
 
-            </div><!-- form-layout -->
-          </div><!-- card -->
+</div><!-- form-layout -->
+
+</div><!-- card -->
 
  
 
-      </div>
+</div>
        
 
 

@@ -58,8 +58,45 @@ Route::get('admin/brand/active/{brand_id}','Admin\BrandController@active');
 
 Route::get('admin/products/add','Admin\ProductController@addproduct')->name('add-products');
 Route::post('admin/products/store','Admin\ProductController@storeproduct')->name('store-products');
-
 Route::get('admin/products/manage','Admin\ProductController@manageproduct')->name('manage-products');
 Route::get('admin/products/edit/{product_id}','Admin\ProductController@editproduct');
+Route::post('admin/products/update','Admin\ProductController@updateproduct')->name('update-products');
+Route::post('admin/products/image-update','Admin\ProductController@updateimage')->name('update-image');
+Route::get('admin/products/delete/{product_id}','Admin\ProductController@destroy');
+Route::get('admin/products/inactive/{product_id}','Admin\ProductController@inactive');
+Route::get('admin/products/active/{product_id}','Admin\ProductController@active');
 
 
+//  ============ Coupon route==========
+
+Route::get('admin/coupon','Admin\CouponController@index')->name('admin.coupon');
+Route::post('admin/coupon-store','Admin\CouponController@store')->name('store.coupon');
+Route::get('admin/coupon/edit/{coupon_id}','Admin\CouponController@edit');
+Route::post('admin/coupon-update','Admin\CouponController@update')->name('update.coupon');
+Route::get('admin/coupon/delete/{coupon_id}','Admin\CouponController@delete');
+Route::get('admin/coupon/inactive/{coupon_id}','Admin\CouponController@inactive');
+Route::get('admin/coupon/active/{coupon_id}','Admin\CouponController@active');
+
+//  ============Fontend Cart route==========
+
+Route::post('add/to-cart/{product_id}','CartController@addToCart');
+Route::get('cart','CartController@cartPage');
+Route::get('cart/destroy/{cart_id}','CartController@destroy');
+Route::post('cart/quantity/update/{cart_id}','CartController@quantityUpdate');
+Route::post('coupon/apply','CartController@applyCoupon');
+Route::get('coupon/destroy','CartController@couponDestroy');
+
+
+//  ============Fontend Wishlist route==========
+Route::get('add/to-wishlist/{product_id}','WishlistController@addToWishlist');
+Route::get('wishlist','WishlistController@wishPage');
+Route::get('wishlist/destroy/{wishlist_id}','WishlistController@destroy');
+
+//  ============Fontend product details route==========
+
+Route::get('product/details/{product_id}','FontendController@productDetails');
+
+
+//======== checkout route ===========
+
+Route::get('checkout','CheckoutController@index');
